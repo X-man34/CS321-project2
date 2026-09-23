@@ -1,4 +1,4 @@
-public class Task implements TaskInterface, Comparable<TaskInterface> {
+public class Task implements TaskInterface, HeapItem<TaskInterface, Integer> {
 
     private int priorityLevel;
     private TaskType taskType;
@@ -104,15 +104,34 @@ public class Task implements TaskInterface, Comparable<TaskInterface> {
      */
     @Override
     public int compareTo(TaskInterface o) {
-        TaskInterface otherObject = (TaskInterface) o;
-        if (priorityLevel > otherObject.getPriority()) {
+        if (priorityLevel > o.getPriority()) {
             return 1;
-        } else if (priorityLevel < otherObject.getPriority()) {
+        } else if (priorityLevel < o.getPriority()) {
             return -1;
         } else {
             // need to use time as a tiebreaker
-            return (hourCreated < otherObject.getPriority()) ? 1 : -1;
+            return (hourCreated < o.getPriority()) ? 1 : -1;
         }
+    }
+
+    @Override
+    public Integer getKey() {
+        return getPriority();
+    }
+
+    @Override
+    public void incrementKey() {
+        this.priorityLevel += 1;
+    }
+
+    @Override
+    public void setKey(Integer key) {
+        this.priorityLevel = key;
+    }
+
+    @Override
+    public void setKeyToMin() {
+        this.priorityLevel = Integer.MIN_VALUE;
     }
 
 }

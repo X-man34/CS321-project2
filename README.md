@@ -1,0 +1,1 @@
+I am going for the generic heap extra credit option and as such needed to use array list (see comment and stack overflow link) and needed to create a heap item interface and may need to modify files that are not supposed to be modified. 
