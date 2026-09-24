@@ -1,7 +1,10 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 import javax.naming.NameAlreadyBoundException;
@@ -12,6 +15,13 @@ import javax.naming.NameAlreadyBoundException;
  * @author Caleb Hottes
  */
 class MaxHeapTest {
+
+    private static Random r;
+
+    @BeforeAll
+    static void setup() {
+        r = new Random(684351684);
+    }
 
     /**
      * Test if the Heap is empty
@@ -54,7 +64,6 @@ class MaxHeapTest {
         assertTrue(validateHeap(heap));
 
         heap = new MaxHeap<>();
-        Random r = new Random(568114);// make tests deterministic
         for (int i = 0; i < 1000; i++) {
             if (i == 14) {
                 System.out.println();
@@ -63,6 +72,47 @@ class MaxHeapTest {
         }
         assertTrue(validateHeap(heap));
 
+    }
+
+    @Test
+    void testExtractMax2() {
+        MaxHeap<TestItem, Integer> heap = new MaxHeap<TestItem, Integer>();
+        heap.insert(new TestItem(4));
+        heap.insert(new TestItem(5));
+        assertTrue(heap.max().datum == 5);
+        assertTrue(heap.extractMax().datum == 5);
+        assertTrue(heap.max().datum == 4);
+        assertTrue(heap.extractMax().datum == 4);
+        assertNull(heap.max());
+    }
+
+    @Test
+    void testExtractMax3() {
+        MaxHeap<TestItem, Integer> heap = new MaxHeap<TestItem, Integer>();
+        heap.insert(new TestItem(4));
+        heap.insert(new TestItem(5));
+        heap.insert(new TestItem(2));
+        assertTrue(heap.max().datum == 5);
+        assertTrue(heap.extractMax().datum == 5);
+        assertTrue(heap.max().datum == 4);
+        assertTrue(heap.extractMax().datum == 4);
+        assertTrue(heap.max().datum == 2);
+        assertTrue(heap.extractMax().datum == 2);
+        assertNull(heap.max());
+    }
+
+    @Test
+    void stressTestExtractMax() {
+        MaxHeap<TestItem, Integer> heap = new MaxHeap<TestItem, Integer>();
+        int numVals = 1000;
+        for (int i = 0; i < numVals; i++) {
+            int anInt = r.nextInt(100);
+            heap.insert(new TestItem(anInt));
+        }
+        int lastVal = Integer.MAX_VALUE;
+        for (int i = 0; i < numVals; i++) {
+            assertTrue(lastVal >= heap.extractMax().datum);
+        }
     }
 
     private boolean validateHeap(MaxHeap<TestItem, Integer> testHeap) {

@@ -52,10 +52,10 @@ public class MaxHeap<E extends HeapItem<E, T>, T> {
         int right = 2 * i + 2;
 
         int largest = i;
-        if (left <= A.size() && (A.get(left).compareTo(A.get(i)) == 1)) {
+        if (left < A.size() && (A.get(left).compareTo(A.get(i)) == 1)) {
             largest = left;
         }
-        if (right <= A.size() && (A.get(right).compareTo(A.get(largest)) == 1)) {
+        if (right < A.size() && (A.get(right).compareTo(A.get(largest)) == 1)) {
             largest = right;
         }
         if (largest != i) {
