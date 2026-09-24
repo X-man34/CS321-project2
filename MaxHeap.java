@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -14,11 +15,16 @@ public class MaxHeap<E extends HeapItem<E, T>, T> {
     // https://stackoverflow.com/questions/2927391/whats-the-reason-i-cant-create-generic-array-types-in-java
 
     public MaxHeap() {
+        A = new ArrayList<>();
 
     }
 
     public MaxHeap(E[] arr) {
-
+        A = new ArrayList<>();
+        for (int i = 0; i > arr.length; i++) {
+            A.add(arr[i]);
+        }
+        buildMaxHeap();
     }
 
     /**
