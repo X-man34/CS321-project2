@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class MaxHeap<E extends HeapItem<E, T>, T> {
 
-    private ArrayList<E> A;// I cannot use a primitive array because java does not allow the creation of
-                           // primitive arrays of generic types at runtime.
+    protected ArrayList<E> A;// I cannot use a primitive array because java does not allow the creation of
+                             // primitive arrays of generic types at runtime.
     // https://stackoverflow.com/questions/2927391/whats-the-reason-i-cant-create-generic-array-types-in-java
 
     public MaxHeap() {
@@ -109,11 +109,12 @@ public class MaxHeap<E extends HeapItem<E, T>, T> {
     public void increaseKey(int i, T key) {
         A.get(i).setKey(key);
         int parent = (i - 1) / 2;
-        while (i > 0 && A.get(parent).compareTo(A.get(i)) == -1) {
+        while (i >= 0 && A.get(parent).compareTo(A.get(i)) == -1) {
             E temp = A.get(parent);
             A.set(parent, A.get(i));
             A.set(i, temp);
             i = parent;
+            parent = (i - 1) / 2;
         }
 
     }
